@@ -1,27 +1,22 @@
-from flask import Flask, request, jsonify
+document.addEventListener("DOMContentLoaded", function() {
+    const searchInput = document.getElementById("searchInput");
+    const searchButton = document.getElementById("searchButton");
 
-app = Flask(__name__)
+    searchButton.addEventListener("click", scrollToElement);
+    searchInput.addEventListener("keydown", function(event) {
+        if (event.key === "Enter") {
+            scrollToElement();
+        }
+    });
 
-# Example data: List of dictionaries containing page content and food keywords
-pages = [
-    {"content": "Discover the best pizza places in town.", "keywords": ["pizza", "food"]},
-    {"content": "Burgers that will leave you craving for more.", "keywords": ["burgers", "fast food"]},
-    {"content": "Explore a variety of cuisines and dishes.", "keywords": ["cuisine", "food"]},
-    # Add more pages here
-]
+    function scrollToElement() {
+        const idToScrollTo = searchInput.value;
+        const elementToScrollTo = document.getElementById(idToScrollTo);
 
-@app.route('/search', methods=['GET'])
-def search():
-    query = request.args.get('q')
-    if not query:
-        return jsonify({"error": "Missing 'q' parameter"}), 400
-    
-    results = []
-    for page in pages:
-        if any(query.lower() in keyword.lower() for keyword in page['keywords']):
-            results.append(page['content'])
-    
-    return jsonify({"results": results})
-
-if __name__ == '__main__':
-    app.run(debug=True)
+        if (elementToScrollTo) {
+            elementToScrollTo.scrollIntoView({ behavior: "smooth" });
+        } else {
+            alert("Element with ID not found!");
+        }
+    }
+});
